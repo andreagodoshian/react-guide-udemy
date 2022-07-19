@@ -1,6 +1,7 @@
 // remember: components in react are just functions, with
 // the extra twist of returning this .jsx code
 
+import React from "react";
 import "./ExpenseDate.css";
 
 ////////////////////////////////////////////////////////////
