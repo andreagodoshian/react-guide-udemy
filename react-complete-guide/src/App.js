@@ -38,15 +38,26 @@ function App() {
     },
   ];
 
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+
+  // can't pass from child to great-grandparent...
+  // therefore, we need to follow the trail
+  const addExpenseHandler = (event) => {
+    console.log("We made it to App.js!! WOO!");
+    console.log(event);
+  }
+
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
+
   return (
     <div>
-      <NewExpense/>
+      <NewExpense onAddExpense={addExpenseHandler}/>
       <Expenses items={expenses}/>
     </div>
   );
 
   /////////////////////////////////////////////
-  // Initial react syntax....
+  // old (legacy) react syntax....
 
   // return React.createElement("div", {},
   //   React.createElement("h2", {}, "Let's get started!"),
