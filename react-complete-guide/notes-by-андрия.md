@@ -1,8 +1,8 @@
-# Notes are starting from "State" lecture...
--------------
+# Notes *(starting from "State" lecture)*
+-------------------------------------------
 
 ### Hooks:
-Hooks typically start with the keyword "use..."
+**Hooks typically start with the keyword "use..."**
 
 IMPORTANT - hooks are almost always called inside of the main function (with some exceptions).
 Not outside, and also not nested.
@@ -16,5 +16,7 @@ Example: const [title, setTitle] = useState(props.title);
 Example: setTitle("Updated!");
 *since this is managed by react, we have to call the "state updating function" rather than setting it to a variable*
 
-Final thoughts: if you watch the console in real-time, you will see the old value being logged upon the click... that's because calling the "state updating function" doesn't change it IMMEDIATELY, but it schedules it to be changed (yes, it's all still pretty fast tho)
+Final thoughts: if you watch the console in real-time, you will see the old value being logged upon click... that's because it "schedules" the change (yes, it's all still pretty fast tho)
+
+AND... you're probably wondering why we're using "const," since we're updating the value... well, that's because we aren't using the assignment operator to update. Does that make sense?
 

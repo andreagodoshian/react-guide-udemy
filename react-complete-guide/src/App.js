@@ -2,6 +2,7 @@
 import React from "react";
 
 import Expenses from "./components/Expenses/Expenses";
+import NewExpense from "./components/NewExpense/NewExpense";
 
 // Remember: props are being funneled FROM HERE!!
 // App.js --> Expenses.js --> ExpenseItem.js --> ExpenseDate.js
@@ -39,7 +40,7 @@ function App() {
 
   return (
     <div>
-      <h2>Let's get started!</h2>
+      <NewExpense/>
       <Expenses items={expenses}/>
     </div>
   );
