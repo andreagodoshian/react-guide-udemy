@@ -2,11 +2,11 @@ import React from 'react';
 
 import './ExpenseFilter.css';
 
-// REMEMBER: PROPS IS JUST "onFilterExpenses={filterExpensesHandler}"
+// REMEMBER: PROPS IS JUST "onChangeFilter={filterChangeHandler}"
 const ExpensesFilter = (props) => {
 
     const yearChangeHandler = (event) => {
-        props.onFilterExpenses(event.target.value);
+        props.onChangeFilter(event.target.value);
     }
 
     return (
