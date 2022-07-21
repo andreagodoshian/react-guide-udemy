@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./NewExpense.css";
 
 import ExpenseForm from "./ExpenseForm";
@@ -6,24 +6,32 @@ import ExpenseForm from "./ExpenseForm";
 // REMEMBER: PROPS IS THE PASSING-FUNCTION WE CREATED!!
 function NewExpense(props) {
 
-    // can't pass from child to great-grandparent...
-    // therefore, we need to follow the trail
-    const saveExpenseHandler = (event) => {
+    const [isEditing, setIsEditing] = useState(false);
 
+    const onEditingHandler = () => {
+        setIsEditing(true)};
+
+    const offEditingHandler = () => {
+        setIsEditing(false)};
+
+    const saveExpenseHandler = (event) => {
         const expenseData = {
             ...event,
-            id: Math.random().toString()
-        };
-
+            id: Math.random().toString()};
         // ***FUNNELING INSIDE!! TACO IN A TACO!!***
         props.onAddExpense(expenseData);
-
-    }
+        setIsEditing(false)};
 
     return (
         <div className="new-expense">
-            {/* passing the function to ExpenseForm */}
-            <ExpenseForm onSaveExpense={saveExpenseHandler} />
+
+            {!isEditing && <button onClick={onEditingHandler}>Add New Expense</button>}
+            
+            {/* passing TWO FUNCTIONS to ExpenseForm */}
+            {isEditing && <ExpenseForm 
+                onSaveExpense={saveExpenseHandler}
+                onCancel={offEditingHandler} />}
+
         </div>
     )
     
