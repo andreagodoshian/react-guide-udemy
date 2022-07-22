@@ -1,4 +1,7 @@
 import React from "react"; // "You're not wrong"
+import classes from "./AddUser.module.css"
+
+import Card from "./UI/Card";
 
 function AddUser() {
 
@@ -11,7 +14,7 @@ function AddUser() {
     // **accessability, screen-readers, etc**
 
     return (
-        <div>
+        <Card className={classes.input}>
             <form onSubmit={onSubmitHandler}>
                 <label htmlFor="name">Name</label>
                 <input id="name" type="text"/>
@@ -21,7 +24,7 @@ function AddUser() {
 
                 <button type="submit">Add User</button>
             </form>
-        </div>
+        </Card>
     )
 
 }
