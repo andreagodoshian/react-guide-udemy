@@ -2,6 +2,7 @@ import React from "react"; // "You're not wrong"
 import classes from "./AddUser.module.css"
 
 import Card from "./UI/Card";
+import Button from "./UI/Button";
 
 function AddUser() {
 
@@ -22,7 +23,7 @@ function AddUser() {
                 <label htmlFor="age">Age (Years)</label>
                 <input id="age" type="number"/>
 
-                <button type="submit">Add User</button>
+                <Button type="submit">Add User</Button>
             </form>
         </Card>
     )
