@@ -3,11 +3,14 @@ import classes from "./AddUser.module.css"
 
 import Card from "../UI/Card";
 import Button from "../UI/Button";
+import ErrorModal from "../UI/ErrorModal";
 
 function AddUser(props) {
 
     const [enteredName, setEnteredName] = useState("");
     const [enteredAge, setEnteredAge] = useState("");
+
+    const [error, setError] = useState();
 
     const nameChangeHandler = (event) => {
         setEnteredName(event.target.value)};
@@ -19,34 +22,49 @@ function AddUser(props) {
 
     const onSubmitHandler = (event) => {
         event.preventDefault()
-        if (enteredName.trim().length === 0 || enteredAge.trim().length === 0) return;
-        if (+enteredAge < 1) return;
+        if (enteredName.trim().length === 0) {
+            setError({
+                title: "Invalid name", message: "Please enter a valid name."})
+            return};
+        if (+enteredAge < 1 || enteredAge.trim().length === 0) {
+            setError({
+                title: "Invalid age", message: "Please enter a valid age."}) 
+            return};
         
-        props.onAddUser(enteredName, enteredAge); //console.log(enteredName, enteredAge)
-        
+        props.onAddUser(enteredName, enteredAge);
         setEnteredName("")
         setEnteredAge("")};
+
+    const errorHandler = () => {
+        setError(null);
+    }
 
     // since this is .jsx (example: className),
     // it has to be <label htmlFor="name">
     // **accessability, screen-readers, etc**
 
     return (
-        <Card className={classes.input}>
-            <form onSubmit={onSubmitHandler}>
-                <label htmlFor="name">Name</label>
-                <input onChange={nameChangeHandler}
-                    value={enteredName}
-                    id="name" type="text"/>
+        <div>
+            {error && <ErrorModal 
+                title={error.title} 
+                message={error.message}
+                onConfirm={errorHandler}/>}
+            <Card className={classes.input}>
+                <form onSubmit={onSubmitHandler}>
+                    <label htmlFor="name">Name</label>
+                    <input onChange={nameChangeHandler}
+                        value={enteredName}
+                        id="name" type="text"/>
 
-                <label htmlFor="age">Age (Years)</label>
-                <input onChange={ageChangeHandler}
-                    value={enteredAge}
-                    id="age" type="number"/>
+                    <label htmlFor="age">Age (Years)</label>
+                    <input onChange={ageChangeHandler}
+                        value={enteredAge}
+                        id="age" type="number"/>
 
-                <Button type="submit">Add User</Button>
-            </form>
-        </Card>
+                    <Button type="submit">Add User</Button>
+                </form>
+            </Card>
+        </div>
     )
 
 }
