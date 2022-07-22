@@ -1,0 +1,13 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-family: Cambria, Cochin, Times, serif;
+  background: black;
+  color: aquamarine;
+}
+
+body{
+   margin: 0;
+}
