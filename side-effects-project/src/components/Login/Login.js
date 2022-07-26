@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Card from '../UI/Card/Card';
 import classes from './Login.module.css';
@@ -11,21 +11,37 @@ const Login = (props) => {
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
 
-  const emailChangeHandler = (event) => {
-    setEnteredEmail(event.target.value);
+  ///////////////////////////////////////////////////
+  // dummy hook
+  // "useEffect is one of the most important React hooks,
+  // so you need to understand it"
+  useEffect(() => {
+    console.log("EFFECT RUNNING!")
+    return () => {
+      console.log("DUMMY CLEANUP")
+    }
+  }, [enteredPassword]) // test with and without empty array!!!!
+  ///////////////////////////////////////////////////
 
-    setFormIsValid(
-      event.target.value.includes('@') && enteredPassword.trim().length > 6
-    );
-  };
+  // side-effects are often http requests, HOWEVER...
+  // "this is a side-effect of the user entering data"
+  useEffect(() => {
+    const identifier = setTimeout(() => {
+      console.log("VALIDATION"); // good visual reference
+      setFormIsValid(
+        enteredEmail.includes('@') && enteredPassword.trim().length > 6
+      );
+    }, 500); // 500 ms
+    return () => {
+      console.log("CLEANUP"); // 21 "CLEANUP" vs. 1 "VALIDATION"
+      clearTimeout(identifier); // NEED TO CLEAR THE TIMER!!!
+    };
+  }, [enteredEmail, enteredPassword]);
+  // ^^this way, it's not "listening to every key-stroke"
+  // and sending five million http requests lol
 
-  const passwordChangeHandler = (event) => {
-    setEnteredPassword(event.target.value);
-
-    setFormIsValid(
-      event.target.value.trim().length > 6 && enteredEmail.includes('@')
-    );
-  };
+  const emailChangeHandler = (event) => setEnteredEmail(event.target.value);
+  const passwordChangeHandler = (event) => setEnteredPassword(event.target.value);
 
   const validateEmailHandler = () => {
     setEmailIsValid(enteredEmail.includes('@'));
