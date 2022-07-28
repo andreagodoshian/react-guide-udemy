@@ -1,6 +1,15 @@
 import React from "react";
 import classes from "./AvailableMeals.module.css";
 
+import MealItem from "./MealItem/MealItem";
+import Card from "../UI/Card";
+
+/*
+Notes:
+
+1.) Parenthesis: DUMMY_MEALS.map(x => ({x.name}));
+*/
+
 const DUMMY_MEALS = [
     {
       id: 'm1',
@@ -31,16 +40,16 @@ const DUMMY_MEALS = [
 // doesn't need props, since hardcoded DUMMY_MEALS
 function AvailableMeals(){
 
-    const mealsList = DUMMY_MEALS.map(x => {
-        <li>{x.name}</li>
-    });
+    const mealsList = DUMMY_MEALS.map(x => (
+      <MealItem key={x.id} name={x.name} description={x.description} price={x.price}/>
+    ));
 
     return(
         <React.Fragment>
             <section className={classes.meals}>
-                <ul>
-                    {mealsList}
-                </ul>
+                <Card>
+                  <ul>{mealsList}</ul>
+                </Card>
             </section>
         </React.Fragment>
     )
