@@ -1,7 +1,8 @@
 import { Fragment, Component } from 'react';
+import classes from './UserFinder.module.css';
 
 import Users from './Users';
-import classes from './UserFinder.module.css';
+import UsersContext from '../store/users-context';
 
 /*
 1.) Functional has TWO state slices, so need to merge them
@@ -10,51 +11,36 @@ import classes from './UserFinder.module.css';
 4.) onChange={this.searchChangeHandler.bind(this)}
 5.) We're done!! Wait... but no hooks?? (useEffect)
 ^^que the life-cycle methods
+6.) componentDidUpdate() makes useEffect(..., [searchTerm]) look nice ;)
+7.) componentDidMount() - runs once (http request - database)
+8.) componentWillUnmount() - see User.js
 
-Doesn't this make useEffect(..., [searchTerm]) look nice?? ;)
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchTerm !== this.state.searchTerm) {
-      this.setState({
-        filteredUsers: DUMMY_USERS.filter((user) => 
-        user.name.includes(this.state.searchTerm))
-      })
-    }
-  }
-
-  6.) Speaking of life-cycle methods...
-  componentDidMount() - http request, get from database
-  ^^only runs once^^
+9.) one ctx allowed: static contextType = UsersContext;
 */
 
-const DUMMY_USERS = [
-  { id: 'u1', name: 'Daria' },
-  { id: 'u2', name: 'Jane' },
-  { id: 'u3', name: 'Trent' },
-];
-
 class UserFinder extends Component {
+  static contextType = UsersContext;
+
   constructor() {
     super();
     this.state = {
-      filteredUsers: DUMMY_USERS,
-      searchTerm: ""
-    }
+      filteredUsers: [],
+      searchTerm: '',
+    };
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevState.searchTerm !== this.state.searchTerm) {
       this.setState({
-        filteredUsers: DUMMY_USERS.filter((user) => 
-        user.name.includes(this.state.searchTerm))
-      })
+        filteredUsers: this.context.users.filter((user) =>
+          user.name.includes(this.state.searchTerm)
+        ),
+      });
     }
   }
 
   searchChangeHandler(event) {
-    this.setState({
-      searchTerm: event.target.value
-    })
+    this.setState({ searchTerm: event.target.value });
   }
 
   render() {
@@ -67,7 +53,6 @@ class UserFinder extends Component {
       </Fragment>
     );
   }
-
 }
 
 export default UserFinder;
