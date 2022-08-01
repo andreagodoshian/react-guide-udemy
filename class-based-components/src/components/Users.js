@@ -3,12 +3,6 @@ import classes from './Users.module.css';
 
 import User from './User';
 
-const DUMMY_USERS = [
-  { id: 'u1', name: 'Daria' },
-  { id: 'u2', name: 'Jane' },
-  { id: 'u3', name: 'Trent' },
-];
-
 /*
 Remember: NONE of the React Hooks will work in Class-Based components :) :) :)
 
@@ -24,6 +18,15 @@ Remember: NONE of the React Hooks will work in Class-Based components :) :) :)
 8.) It's okay to put "helper methods" (ex. Java Streams) in render()
 9.) <button onClick={this.toggleUsersHandler.bind(this)}>
 10.) super() = needed to implement {Component}
+
+Where did DUMMY_USERS go?
+function App() {
+  return (
+    <div>
+      <UserFinder />
+    </div>
+  );
+}
 */
 
 class Users extends Component {
@@ -46,7 +49,7 @@ class Users extends Component {
   render() {
     const usersList = (
       <ul>
-        {DUMMY_USERS.map((user) => (
+        {this.props.users.map((user) => (
           <User key={user.id} name={user.name} />
         ))}
       </ul>
