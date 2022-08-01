@@ -18,15 +18,6 @@ Remember: NONE of the React Hooks will work in Class-Based components :) :) :)
 8.) It's okay to put "helper methods" (ex. Java Streams) in render()
 9.) <button onClick={this.toggleUsersHandler.bind(this)}>
 10.) super() = needed to implement {Component}
-
-Where did DUMMY_USERS go?
-function App() {
-  return (
-    <div>
-      <UserFinder />
-    </div>
-  );
-}
 */
 
 class Users extends Component {
@@ -34,16 +25,20 @@ class Users extends Component {
     super();
     this.state = {
       showUsers: true,
-      dummy_moreState: "Test",
-      dummy_nested: {},
-      dummy_data: []
+      more: 'Test',
     };
   }
-  
+
+  componentDidUpdate() {
+    if (this.props.users.length === 0) {
+      throw new Error('No users provided!');
+    }
+  }
+
   toggleUsersHandler() {
-    this.setState((xState) => {
-      return {showUsers: !xState.showUsers}
-    })
+    this.setState((curState) => {
+      return { showUsers: !curState.showUsers };
+    });
   }
 
   render() {
@@ -65,6 +60,7 @@ class Users extends Component {
     );
   }
 }
+
 
 export default Users;
 

@@ -12,13 +12,16 @@ class User extends Component {
 
   // we are rendering three dummy users, so it logs for all three
   componentWillUnmount() {
-    console.log("Users will unmount")
-  }
-  
-  render() {
-    return <li className={classes.user}>{this.props.name}</li>;
+    console.log('User will unmount!');
   }
 
+  render() {
+    return <li className={classes.user}>{this.props.name}</li>;
+  } 
 }
+
+// const User = (props) => {
+//   return <li className={classes.user}>{props.name}</li>;
+// };
 
 export default User;
