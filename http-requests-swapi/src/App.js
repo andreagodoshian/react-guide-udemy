@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
 import MoviesList from './components/MoviesList';
 import './App.css';
@@ -8,6 +8,10 @@ import './App.css';
 2.) .then(): because fetch returns a "promise"
 3.) .json(): translates, but also just a "promise"
 4.) Promises: not React-specific; it's JavaScript terminology
+5.) Side-effect: fetching movies immediately page loads
+^^don't forget dependencies, or you'll create an infinite loop
+6.) useEffect(() => { ... }, [fetchMoviesHandler])
+^^also infinite, since functions are {objects} & always re-render
 */
 
 function App() {
@@ -16,7 +20,7 @@ function App() {
   const [error, setError] = useState(null);
 
   // see below, for sytax without "async/await"
-  async function fetchMoviesHandler() {
+  const fetchMoviesHandler = useCallback(async () => {
     try {
       setIsLoading(true);
       setError(null); // reset, for a new request
@@ -41,7 +45,11 @@ function App() {
     } finally {
       setIsLoading(false);
     }
-  }
+  }, []); // swapi.dev = no dependencies
+
+  useEffect(() => {
+    fetchMoviesHandler();
+  }, [fetchMoviesHandler]) // needed to move, because of "function hoisting"
 
   let content = <h4>Found no movies.</h4>;
   if (error) content = <h4>{error}</h4>
