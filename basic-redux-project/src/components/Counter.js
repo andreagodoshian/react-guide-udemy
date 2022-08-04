@@ -1,12 +1,36 @@
+import { useSelector, useDispatch } from 'react-redux';
+
 import classes from './Counter.module.css';
 
+/*
+1.) Redux isn't only React, which explains "react-redux"
+Example: { useSelector, useDispatch } are hooks developed for React
+2.) an "action" is an object with a "type" property
+Example: dispatch( {type: "increment"} );
+*/
 const Counter = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector(state => state.counter);
+  // "Select(or)" from the store
+
+  const incrementHandler = () => {
+    dispatch({ type: "increment" })
+  };
+
+  const decrementHandler = () => {
+    dispatch({ type: "decrement" })
+  };
+
   const toggleCounterHandler = () => {};
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>-- COUNTER VALUE --</div>
+      <div className={classes.value}>{counter}</div>
+      <div>
+        <button onClick={incrementHandler}>Increment</button>
+        <button onClick={decrementHandler}>Decrement</button>
+      </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>
     </main>
   );
