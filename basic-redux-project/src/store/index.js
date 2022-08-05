@@ -1,25 +1,28 @@
-import { createStore } from 'redux'
+import { configureStore } from '@reduxjs/toolkit';
+
+import counterReducer from './counter';
+import authReducer from './auth';
 
 /*
-1.) How do we connect this "store" to the rest of the app?
-Since we're using Redux, we only have ONE store... therefore,
-we only need to "provide" it once ***see src/index.js***
+1.) Plain react-redux...
+-typos (example: action.type === 'increment')
+-have to copy all of the "params"
+return { count: state.count, show: state.show, ETC}
+-have to always respect state immutability
+bad- state.counter++ || good- counter: state.counter
+
+2.) Cue '@reduxjs/toolkit' :-)
+This was developed by the react-redux team...
+...so it's a "safe" option
+
+3.) How do we connect this "store" to the app?
+Remember: with Redux, only ONE store...
+so we only need to "provide" it once 
+***see src/index.js***
 */
-const counterReducer = (state = {counter: 0}, action) => {
-    if (action.type === "increment") {
-        return {
-            counter: state.counter + 1,
-        };
-    }
-    if (action.type === "decrement") {
-        return {
-            counter: state.counter - 1,
-        };
-    }
-    return state;
-}
 
-const store = createStore(counterReducer);
-
-export default store; 
-//^^ const store = createStore(counterReducer);
+const store = configureStore({
+    reducer: { counter: counterReducer, auth: authReducer },
+});
+  
+export default store;
